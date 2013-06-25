@@ -1,0 +1,30 @@
+{
+  "name": "ScriptManager",
+  "version": "0.0.0",
+  "description": "The Script Manager for Google Apps Scrpt ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "GoogleAppsScript",
+    "GAS",
+    "AppsScript"
+  ],
+  "author": "keisuke oohashi",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.0",
+    "grunt-contrib-concat": "~0.1.3",
+    "grunt-contrib-coffee": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-regarde": "~0.1.1",
+    "matchdep": "~0.1.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
