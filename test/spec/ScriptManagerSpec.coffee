@@ -18,5 +18,16 @@ describe "ScriptManager", ()->
     expect(ScriptManager.getProject).toThrow('this is mock function, should not call directly. Please call "create" method before calling this')
     @
 
+  describe '#create method', ()->
+
+    it 'given api key', ()->
+      expect(()-> ScriptManager.create()).toThrow("given apiKey")
+      @
+
+    it 'should create ScriptManager instance', ()->
+      scriptManager = ScriptManager.create(apiKey : 'hoge')
+      expect(scriptManager).toBeDefined()
+      @
+
   @
 

@@ -7,6 +7,9 @@ class ScriptManager
     ].join("+")
 
     constructor:(@options={})->
+
+        if !@options.apiKey then throw new Error("given apiKey")
+
         @options.consumerKey = @options.consumerKey || 'anonymous'
         @options.consumerSecret = @options.consumerSecret || 'anonymous'
         @options.oauthName = @options.oauthName || 'ScriptManager'
