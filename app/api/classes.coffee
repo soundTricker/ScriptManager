@@ -21,6 +21,9 @@ class ScriptManager
         oauthConfig.setAccessTokenUrl('https://www.google.com/accounts/OAuthGetAccessToken')
         
     getProject:(fileId)=>
+
+        if !fileId then throw new Error("fileId is requiered")
+
         option = @generateFetchOption_('get')
         url = Utilities.formatString ScriptManager.DOWNLOAD_URL_BASE, fileId
         res = UrlFetchApp.fetch(url,option).getBlob()
@@ -115,4 +118,7 @@ class GASFile
                 get : get
                 set : set
             )
-    
+
+@ScriptManager = ScriptManager
+@GASProject = GASProject
+@GASFile = GASFile

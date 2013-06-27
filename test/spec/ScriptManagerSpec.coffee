@@ -1,5 +1,6 @@
 describe "ScriptManager", ()->
   apiKey = ScriptProperties.getProperty("apiKey")
+  fileId = ScriptProperties.getProperty("fileId")
 
   it "should have create method",()->
     expect(ScriptManager.create).toBeDefined()
@@ -28,6 +29,54 @@ describe "ScriptManager", ()->
       scriptManager = ScriptManager.create(apiKey : 'hoge')
       expect(scriptManager).toBeDefined()
       @
+
+    describe "#ScriptManager Instance", ()->
+      scriptManager = null
+
+      beforeEach ()->
+        scriptManager = ScriptManager.create(apiKey : apiKey)
+        @
+
+      it "should have options property", ()->
+        expect(scriptManager.options).toBeDefined()
+        @
+
+      it "set default value to options ", ()->
+        expect(scriptManager.options.consumerKey).toBe("anonymous")
+        expect(scriptManager.options.consumerSecret).toBe("anonymous")
+        expect(scriptManager.options.oauthName).toBe("ScriptManager")
+        @
+
+      it "does not set options's properties, if they are already set",()->
+        scriptManager = ScriptManager.create(
+          apiKey : apiKey
+          consumerKey : "consumerKey"
+          consumerSecret : "consumerSecret"
+          oauthName : "oauthName"
+        )
+
+        expect(scriptManager.options.consumerKey).toBe("consumerKey")
+        expect(scriptManager.options.consumerSecret).toBe("consumerSecret")
+        expect(scriptManager.options.oauthName).toBe("oauthName")
+        @
+
+      describe "#getProject method",()->
+
+        it "should throw error, if does not set fileId", ()->
+          expect(()->scriptManager.getProject()).toThrow "fileId is requiered"
+          @
+
+        it "should get GASProject instance",()->
+          project = scriptManager.getProject(fileId)
+          expect(project).toBeDefined()
+          @
+        @
+      describe "#createProject method", ()->
+
+
+      @
+
+    @
 
   @
 
