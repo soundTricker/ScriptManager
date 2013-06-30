@@ -26,11 +26,11 @@ class ScriptManager
 
         option = @generateFetchOption_('get')
         url = Utilities.formatString ScriptManager.DOWNLOAD_URL_BASE, fileId
-        res = UrlFetchApp.fetch(url,option).getBlob()
-        json = res.getDataAsString()
-        name = res.getName()
-        return new GASProject name, fileId,  @, JSON.parse(json)
-        
+        res = UrlFetchApp.fetch(url, option)
+        blob = res.getBlob();
+        json = blob.getDataAsString();
+        name = decodeURI(res.getAllHeaders()["Content-Disposition"].split("''")[1].replace(/\.json$/,""))
+        return new GASProject(name, fileId, this, JSON.parse(json))
         
     generateFetchOption_:(method)=>
         option = 
@@ -41,7 +41,7 @@ class ScriptManager
         return option
     
     createProject:(projectName)->
-        return new GASProject projectName , null, @ {files : []}
+        return new GASProject projectName , null, @, {files : []}
     
     createNewProject_:(filename, project)=>
         
@@ -58,7 +58,8 @@ class ScriptManager
             options.contentType = 'application/json'
             res = UrlFetchApp.fetch("https://www.googleapis.com/drive/v2/files/#{json.id}#{if @options.apiKey then '?key=' + @options.apiKey else ''}",options)
             json = JSON.parse(res.getContentText())
-        return new GASProject json.title , json.id,  @, project
+
+        return new GASProject filename || json.title, json.id, @, project
         
     updateProject_:(fileId, project)=>
         options = @generateFetchOption_('put')
@@ -69,8 +70,9 @@ class ScriptManager
         return new GASProject json.title, fileId, @, project
 
 class GASProject
-    constructor:(@filename, @fileId, @manager, @origin)->
-        
+    constructor:(@filename, @fileId, @manager, @origin={files:[]})->
+        if !@origin.files then @origin.files = []
+
     getFiles:()->
         return (new GASFile(@manager, origin) for origin in @origin.files)
         
@@ -99,12 +101,17 @@ class GASProject
         return @
     
     deploy:()=>
-        if fileId
+        if @fileId
             @manager.updateProject_(@fileId, @origin)
         else
             @manager.createNewProject_(@filename, @origin)
         
     create:()=>
+
+        newProject = JSON.parse(JSON.stringify(@origin))
+
+        delete file.id for k, file in newProject.files when file.id
+
         @manager.createNewProject_(@filename, @origin)
         
 class GASFile

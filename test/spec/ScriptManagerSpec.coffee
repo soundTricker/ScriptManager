@@ -69,14 +69,26 @@ describe "ScriptManager", ()->
         it "should get GASProject instance",()->
           project = scriptManager.getProject(fileId)
           expect(project).toBeDefined()
+          expect(project.fileId).toBe fileId
           @
         @
       describe "#createProject method", ()->
 
+        it "should create empty project", ()->
+          project = scriptManager.createProject()
+          expect(project).toBeDefined()
+          expect(project.fileId).toBeNull()
+          expect(project.filename).toBeUndefined()
+          @
 
+        it "can set project name", ()->
+          project = scriptManager.createProject("filename")
+          expect(project).toBeDefined()
+          expect(project.fileId).toBeNull()
+          expect(project.filename).toBe("filename")
+          @
+        @
       @
-
     @
-
   @
 
