@@ -1,0 +1,28 @@
+{
+    "src":{
+        "projectId" : "",
+        "files" : {
+            "コード" : {
+                "src" : "app/main.js",
+                "type" : "server_js",
+                "convert" : false
+            },
+            "apiClass" : {
+                "src" : ["app/api/classes.coffee"],
+                "type" : "server_js",
+                "convert" : true
+            }
+        }
+    },
+    "test":{
+        "projectId" : "",
+        "files" : {
+            "Specs":{
+                "src" : ["test/spec/ScriptManagerSpec.coffee", "test/spec/GASProjectSpec.coffee"],
+                "type" : "server_js",
+                "convert" : true
+            }
+        }
+    },
+    "task" : ["test", "deploy"]
+}
