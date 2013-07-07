@@ -1,3 +1,5 @@
+ScriptMangager = required['apiClass']
+
 describe "ScriptManager", ()->
   apiKey = ScriptProperties.getProperty("apiKey")
   fileId = ScriptProperties.getProperty("fileId")
@@ -5,6 +7,7 @@ describe "ScriptManager", ()->
   it "should have create method",()->
     expect(ScriptManager.create).toBeDefined()
     expect(typeof ScriptManager.create).toBe('function')
+    
     @
 
   it "should have getProject method, it's a code assitant method",()->

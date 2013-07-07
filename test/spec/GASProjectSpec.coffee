@@ -1,3 +1,5 @@
+ScriptMangager = required['apiClass']
+
 describe "GASProject", ()->
   apiKey = ScriptProperties.getProperty("apiKey")
   fileId = ScriptProperties.getProperty("fileId")
